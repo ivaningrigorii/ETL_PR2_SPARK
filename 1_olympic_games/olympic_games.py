@@ -5,13 +5,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import lower, col
 
 FILES_SRC_PATH = './src'
-spark = (
-        SparkSession
-            .builder
-            .appName('pyspark_vstu_project_2_1')
-            .enableHiveSupport()
-            .getOrCreate())
-spark.sparkContext.setLogLevel('WARN')
 
 
 '''1. Олимпийские дисциплины по сезонам, генерация df'''
@@ -104,4 +97,11 @@ def main():
 
 
 if __name__ == '__main__':
+    spark = SparkSession \
+        .builder \
+        .appName('pyspark_vstu_project_2_1') \
+        .enableHiveSupport() \
+        .getOrCreate()
+    spark.sparkContext.setLogLevel('ERROR')
+
     main()
