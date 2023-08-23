@@ -77,7 +77,7 @@ def stat_athlts_discipl(df_stat_athletes, df_disciplines):
             df_disciplines.discipline.alias('discipline'), 
             'season', col('count').alias('count_athletes')
         ) \
-        .show(5)
+        .show(10)
 
     print('Сохранение результата')
     df_stat_athletes \
