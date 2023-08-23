@@ -65,7 +65,7 @@ def save_stat_athletes_csv(df_stat_athletes):
 '''Статистика по дисциплинам с учётом созданного df'''
 def stat_athlts_discipl(df_stat_athletes, df_disciplines):
     print('Расчёт статистики с учётом созданного ранее df дисциплин')
-    df_disciplines \
+    result = df_disciplines \
         .join(
             df_stat_athletes,
             lower(df_stat_athletes.Discipline) == df_disciplines.discipline,
@@ -80,7 +80,7 @@ def stat_athlts_discipl(df_stat_athletes, df_disciplines):
         .show(10)
 
     print('Сохранение результата')
-    df_stat_athletes \
+    result \
           .write \
           .mode("overwrite") \
           .options(header=True) \
