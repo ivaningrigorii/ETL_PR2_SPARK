@@ -88,11 +88,14 @@ def stat_athlts_discipl(df_stat_athletes, df_disciplines):
     
 
 def main():
+    print('Выполнение задания 1')
     df_disciplines = create_disciplines_df()
 
+    print('Выполнение задания 2')
     df_stat_athletes = read_stat_athletes_csv()
     save_stat_athletes_csv(df_stat_athletes)
 
+    print('Выполнение задания 3')
     stat_athlts_discipl(df_stat_athletes, df_disciplines)
 
 
