@@ -41,15 +41,15 @@ def create_disciplines_df():
 
 '''2. Считывание данных из Athletes.csv'''
 def read_stat_athletes_csv():
-     print('Считывание данных из Athletes.csv')
-     df_athletes = spark.read.options(header=True, delimiter=';') \
-          .csv(f'{FILES_SRC_PATH}/Athletes.csv')
+    print('Считывание данных из Athletes.csv')
+    df_athletes = spark.read.options(header=True, delimiter=';') \
+        .csv(f'{FILES_SRC_PATH}/Athletes.csv')
 
-     print('Генерация статистики по дисциплинам')
-     df_stat_athletes = df_athletes.groupBy('Discipline').count()
-     df_stat_athletes.show(5)
+    print('Генерация статистики по дисциплинам')
+    df_stat_athletes = df_athletes.groupBy('Discipline').count()
+    df_stat_athletes.show(5)
 
-     return df_stat_athletes
+    return df_stat_athletes
 
 
 '''Сохранение статистики по дисциплинам из Athletes.csv'''
