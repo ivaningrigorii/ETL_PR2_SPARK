@@ -1,17 +1,16 @@
 import os
-import findspark
-findspark.init('/opt/spark-3.4.1-bin-hadoop3')
+from getpass import getpass
 
+import findspark
 from pyspark.sql import SparkSession 
 from delta import configure_spark_with_delta_pip
 from delta.tables import DeltaTable
 
 from sqlalchemy.engine.base import Engine
 from sqlalchemy import create_engine
-
 import pandas as pd
 
-from getpass import getpass
+
 
 
 ENGINE: Engine = None
@@ -225,6 +224,8 @@ def main():
 
 
 if __name__ == '__main__':
+    findspark.init('/opt/spark-3.4.1-bin-hadoop3')
+
     builder = SparkSession \
         .builder \
         .appName('pyspark_neoflex_project_2_2') \
