@@ -201,7 +201,7 @@ def menu():
         "1": logs_show,
         "2": exe_deltas_merge,
         "3": input_main_vals,
-        "0": exit
+        "4": exit
     }
     while True:
         clear()
@@ -209,13 +209,11 @@ def menu():
             "1. Просмотр логов (последние 10)\n" +
             "2. Расчёт дельта-таблиц\n" +
             "3. Обновление сведений о пути, дельтах\n" +
-            "0. Выход"
+            "4. Выход"
         )
         action = str(input("Необходимо выбрать пункт меню >>> "))
-        try:
+        if action in actions:
             actions[action]()
-        except:
-            print("Такого пункта меню нет")
 
 
 def main():
