@@ -212,7 +212,10 @@ def menu():
             "0. Выход"
         )
         action = str(input("Необходимо выбрать пункт меню >>> "))
-        actions[action]()
+        try:
+            actions[action]()
+        except:
+            print("Такого пункта меню нет")
 
 
 def main():

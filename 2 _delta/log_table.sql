@@ -12,7 +12,7 @@ commit;
 -- drop table logs_deltas;
 -- commit;
 
-
+select * from logs.logs_deltas;
 	
 	
 	
