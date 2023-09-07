@@ -15,17 +15,14 @@ from getpass import getpass
 
 
 ENGINE: Engine = None
-
-# значения, получаемые через ввод
-global PATH, RESULT_PATH, TABLE_NAME, PK_EQUALS
-
-# для linux
-clear = lambda: os.system('clear')
+global PATH, RESULT_PATH, TABLE_NAME, PK_EQUALS # вводятся с консоли
 
 
-# добавление лога
-# некоторые сложности на случай, если будут "оборванные логи"
+clear = lambda: os.system('clear') # очистка консоли для linux
+
+
 def log_start(delta_id, table_name):
+    """ Логирование. Начало расчёта дельты """
     log_insert = f'''
         INSERT INTO 
             logs.logs_deltas (delta_id, start_date, end_date, table_name)
@@ -44,6 +41,7 @@ def log_start(delta_id, table_name):
 
 
 def log_end(log_id):
+    """ Логирование. Конец расчёта дельты """
     log_update_end = f'''
         UPDATE logs.logs_deltas 
         SET end_date = current_timestamp 
@@ -54,9 +52,8 @@ def log_end(log_id):
 
 
 def logs_show():
-    print("Вывод логов")
+    """ Логирование. Вывод последних 10 логов """
     clear()
-
     query = f'''
         SELECT
             log_id,
@@ -77,6 +74,7 @@ def logs_show():
 
 
 def find_logs_delta(delta_id, table_name):
+    """ Обработка логов. Поиск законченных расчётов дельты """
     query = f'''
     SELECT 
     	log_id
@@ -93,8 +91,8 @@ def find_logs_delta(delta_id, table_name):
     return False
 
 
-# перевод списка колонок в pk в строку сравнения
 def str_pk_equal_from_list(pk):
+    """ Наименование колонок из List в str """
     res_str = ""
     for i, pk_part in enumerate(pk):
         if i != 0:
@@ -103,8 +101,8 @@ def str_pk_equal_from_list(pk):
     return res_str
 
 
-# объединение основной таблицы и дельта-таблицы в режиме добавить или обновить
 def merge_delta_table_with_main_table(path_delta, path_main_table, pk_equal):
+    """ Объединение дельта-таблицы с DeltaTable """
     df_delta = spark.read.format("csv") \
         .options(header=True, delimiter=';') \
         .load(path_delta)
@@ -125,6 +123,7 @@ def merge_delta_table_with_main_table(path_delta, path_main_table, pk_equal):
 
 
 def delta_res_to_csv(delta_res_tmp_folder_path, delta_res_csv):
+    """ Выгрузка данных из DeltaTable в итоговый csv """
     df = DeltaTable.forPath(spark, delta_res_tmp_folder_path).toDF()
     df.write.format("csv") \
         .mode("overwrite") \
@@ -132,8 +131,8 @@ def delta_res_to_csv(delta_res_tmp_folder_path, delta_res_csv):
         .save(delta_res_csv)
     
 
-# выполнение слияния основной таблицы с дельта-таблицами
 def exe_deltas_merge():
+    """ Расчёт дельта-таблиц """
     clear()
     # получение списка всех дельт
     delta_folder_names = os.listdir(PATH)
@@ -166,6 +165,7 @@ def exe_deltas_merge():
 
 
 def input_main_vals():
+    """ Ввод с консоли пути, названия таблиц и PK """
     global PATH, RESULT_PATH, TABLE_NAME, PK_EQUALS
     clear()
     print("Ввод основных параметров")
@@ -182,6 +182,7 @@ def input_main_vals():
 
 
 def input_db_con_str():
+    """ Ввод параметров для подлючения к БД (для логов) """
     global ENGINE, ENGINE_STR
 
     clear()
@@ -198,6 +199,7 @@ def input_db_con_str():
 
 
 def menu():
+    """ Меню в терминале """
     actions = {
         "1": logs_show,
         "2": exe_deltas_merge,
