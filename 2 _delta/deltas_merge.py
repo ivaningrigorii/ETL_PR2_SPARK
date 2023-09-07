@@ -11,8 +11,6 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 
-
-
 ENGINE: Engine = None
 global PATH, RESULT_PATH, TABLE_NAME, PK_EQUALS # вводятся с консоли
 
