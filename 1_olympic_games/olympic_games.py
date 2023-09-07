@@ -31,7 +31,7 @@ def create_disciplines_df():
         .write \
         .mode("overwrite") \
         .options(header=True, delimiter='	') \
-        .csv(f'{FILES_SRC_PATH}/disciplines.scv')
+        .csv(f'{FILES_SRC_PATH}/disciplines.csv')
     df_disciplines.show(10)
     
     print('df дисциплин был сохранён')
@@ -76,8 +76,8 @@ def stat_athlts_discipl(df_stat_athletes, df_disciplines):
             'row_id', 
             df_disciplines.discipline.alias('discipline'), 
             'season', col('count').alias('count_athletes')
-        ) \
-        .show(10)
+        ) 
+    result.show(10)
 
     print('Сохранение результата')
     result \
@@ -102,7 +102,7 @@ def main():
 if __name__ == '__main__':
     spark = SparkSession \
         .builder \
-        .appName('pyspark_vstu_project_2_1') \
+        .appName('pyspark_neoflex_project_2_1') \
         .enableHiveSupport() \
         .getOrCreate()
     spark.sparkContext.setLogLevel('ERROR')
