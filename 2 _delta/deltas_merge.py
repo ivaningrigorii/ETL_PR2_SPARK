@@ -228,8 +228,12 @@ if __name__ == '__main__':
         .builder \
         .appName('pyspark_neoflex_project_2_2') \
         .enableHiveSupport() \
-        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
-        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+        .config(
+            "spark.sql.extensions", 
+            "io.delta.sql.DeltaSparkSessionExtension") \
+        .config(
+            "spark.sql.catalog.spark_catalog", 
+            "org.apache.spark.sql.delta.catalog.DeltaCatalog")
 
     spark = configure_spark_with_delta_pip(builder).getOrCreate()
     spark.sparkContext.setLogLevel('ERROR')
